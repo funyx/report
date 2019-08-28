@@ -345,10 +345,13 @@ class UnionModel extends \atk4\data\Model
      * Export model.
      *
      * @param array $fields
+     * @param null  $key_field
+     * @param bool  $typecast_data
      *
      * @return array
+     * @throws \atk4\core\Exception
      */
-    public function export($fields = null)
+    public function export($fields = null, $key_field = null, $typecast_data = true)
     {
         if ($fields) {
             $this->onlyFields($fields);
