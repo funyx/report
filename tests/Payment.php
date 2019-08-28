@@ -10,6 +10,8 @@ class Payment extends \atk4\data\Model
         $this->addField('name');
 
         $this->hasOne('client_id', 'Client');
-        $this->addField('amount', ['money'=>true]);
+        $this->addField('amount', [
+            'type'=>'money'
+        ]);
     }
 }

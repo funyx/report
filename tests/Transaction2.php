@@ -15,7 +15,9 @@ class Transaction2 extends \atk4\report\UnionModel
 
         // next, define common fields
         $this->addField('name');
-        $this->addField('amount', ['type'=>'money']);
+        $this->addField('amount', [
+            'type'=>'money'
+        ]);
         //$this->hasOne('client_id', new Client());
     }
 }
