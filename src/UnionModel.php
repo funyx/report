@@ -236,8 +236,8 @@ class UnionModel extends \atk4\data\Model
 
             $args[$cnt++] = $q;
         }
-        $args[$cnt] = $this->table;
-        return $this->persistence->dsql()->expr('('.join(' UNION ALL ',$expr).') {'.$cnt.'}', $args);
+        $args['table'] = $this->table;
+        return (new ReportExpression([],$args))->setUnionTemplate();
     }
 
     /**
@@ -271,7 +271,7 @@ class UnionModel extends \atk4\data\Model
         }
         $fields2 = [];
         foreach ($fields as $field) {
-            if ($this->getElement($field)->never_persist) {
+            if ($this->getField($field)->never_persist) {
                 continue;
             }
             $fields2[] = $field;
@@ -397,12 +397,12 @@ class UnionModel extends \atk4\data\Model
 
         foreach ($aggregate as $field=>$expr) {
 
-            $field_object = $this->hasElement($field);
+            $field_object = $this->hasField($field);
 
             $e = $this->expr($expr, [$field_object]);
 
             if ($field_object) {
-                $field_object->destroy();
+                $this->removeField($field);
             }
 
             $field_object = $this->addExpression($field, $e);
